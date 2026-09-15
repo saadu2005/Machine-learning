@@ -1,4 +1,4 @@
-"""Linear Regression with preprocessing."""
+"""Step-by-step Linear Regression example."""
 import numpy as np
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
@@ -8,11 +8,17 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+# Step 1: Load the dataset
 X, y = load_diabetes(return_X_y=True)
+# Step 2: Split features and target into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Step 3: Build preprocessing and one model
 model = Pipeline([('imputer', SimpleImputer(strategy='median')), ('scaler', StandardScaler()), ('regressor', LinearRegression())])
+# Step 4: Train the model
 model.fit(X_train, y_train)
-pred = model.predict(X_test)
-print('MAE:', mean_absolute_error(y_test, pred))
-print('RMSE:', np.sqrt(mean_squared_error(y_test, pred)))
-print('R2:', r2_score(y_test, pred))
+# Step 5: Make predictions
+predictions = model.predict(X_test)
+# Step 6: Evaluate the model
+print('MAE:', mean_absolute_error(y_test, predictions))
+print('RMSE:', np.sqrt(mean_squared_error(y_test, predictions)))
+print('R2:', r2_score(y_test, predictions))
